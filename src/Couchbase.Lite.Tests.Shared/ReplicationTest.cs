@@ -1762,6 +1762,12 @@ namespace Test
             flags.HasFlag(C4DocumentFlags.DocExists | C4DocumentFlags.DocHasAttachments).Should().BeTrue();
         }
 
+        #region Pending Doc Ids unit tests
+
+
+
+        #endregion
+
         private void TestConflictResolverExceptionThrown(TestConflictResolver resolver, bool continueWithWorkingResolver = false, bool withBlob = false)
         {
             CreateReplicationConflict("doc1");
