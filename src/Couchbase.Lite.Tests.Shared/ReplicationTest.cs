@@ -74,7 +74,7 @@ namespace Test
             Database.Delete($"otherdb{nextCounter}", Directory);
             _otherDB = OpenDB($"otherdb{nextCounter}");
             //uncomment the code below when you need to see more detail log
-            //Database.SetLogLevel(LogDomain.Replicator, LogLevel.Verbose);
+            //Database.Log.Console.Level = LogLevel.Debug;
         }
 #if !WINDOWS_UWP
         [Fact]
@@ -791,6 +791,8 @@ namespace Test
             Db.Count.Should().Be(2UL, "because the replicator was reset");
         }
 
+        #region p2p unit tests
+
         //[Fact]
         //public void TestShortP2P()
         //{
@@ -1089,6 +1091,8 @@ namespace Test
 
         //    statuses.Count.Should().Be(0);
         //}
+
+        #endregion
 
         [Fact]
         public void TestPushAndForget()
@@ -1602,6 +1606,8 @@ namespace Test
             {
                 replicator.RemoveChangeListener(token);
                 replicator1.RemoveChangeListener(token1);
+                replicator.Dispose();
+                replicator1.Dispose();
             }
 
             using (var doc = Db.GetDocument("doc1"))
