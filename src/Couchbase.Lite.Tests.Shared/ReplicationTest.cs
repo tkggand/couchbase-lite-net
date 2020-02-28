@@ -571,7 +571,7 @@ namespace Test
                         r.RemoveChangeListener(token);
                     }
 
-                    Task.Delay(100).Wait();
+                    Task.Delay(500).Wait(); // increase delay time to prevent intermittent failures due to replicator ref might not completely dererf yet atm
                 }
             }
         }
@@ -616,6 +616,7 @@ namespace Test
             } finally {
                 _repl.RemoveChangeListener(token);
                 _repl.RemoveChangeListener(token1);
+                _repl.Dispose();
             }
 
             _replicationEvents.Should().HaveCount(2);
@@ -912,7 +913,6 @@ namespace Test
         //[Fact]
         //public void TestP2PPermanentFailureDuringReceive() => TestP2PError(MockConnectionLifecycleLocation.Receive, false);
 
-
         //[Fact]
         //public void TestP2PFailureDuringClose()
         //{
@@ -963,7 +963,6 @@ namespace Test
                     Thread.Sleep(500);
                     count.Should().BeLessThan(10, "because otherwise the replicator never stopped");
                 }
-
 
                 awaiter.WaitHandle.WaitOne(TimeSpan.FromSeconds(10)).Should().BeTrue();
                 awaiter.Validate();
